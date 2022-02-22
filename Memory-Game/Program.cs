@@ -1,15 +1,26 @@
 ﻿namespace MemoryGame
 {
 
-
     class Program
     {
 
         static void Main()
         {
+            string[] words = File.ReadAllLines("D:/Motorola/Coding Task Motorola Academy C#/Words.txt");
+
+
             Console.Clear();
+
+
+
             Board(5);
+
         }
+
+        
+
+
+
 
         static void Board(int col)
         {
