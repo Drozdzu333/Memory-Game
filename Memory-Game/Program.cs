@@ -6,14 +6,22 @@
 
         static void Main()
         {
+            Random random = new Random();
+
             string[] words = File.ReadAllLines("D:/Motorola/Coding Task Motorola Academy C#/Words.txt");
             bool exit = false;
             while (!exit)
             {
+                // Variables
                 bool chosenDifficulty = false;
-                string difficulty = "none";
+                string difficulty = "";
+                int boardLength  = 0;
+                int maxLives = 0;
+
+
                 Console.Clear();
 
+                // 
                 while (!chosenDifficulty)
                 {
                 Console.WriteLine("Write the difficulty level: easy | hard");
@@ -27,8 +35,36 @@
 
                     };
                 };
-
                 Console.WriteLine($"Chosen level {difficulty}");
+
+                // Rules for board creation
+                if (difficulty == "easy")
+                {
+                    boardLength = 5;
+                    maxLives = 10;
+                }else if (difficulty == "hard")
+                {
+                    boardLength = 8;
+                    maxLives = 15;
+                }
+
+                // Filling boards of not duplicated words
+                string[] boardsWords = new string[boardLength];
+                for (int i = 0; i < boardLength; i++)
+                {
+                    string word = words[random.Next(words.Length)];
+                    if (Array.IndexOf(boardsWords, word) < 0)
+                    {
+                        boardsWords[i] = word;
+                    }
+                    else i--;
+                }
+                foreach(string el in boardsWords){
+                    Console.WriteLine(el);
+                }
+
+
+
 
                 Board(5);
 
@@ -39,7 +75,10 @@
 
         }
 
-
+        private static void forech(int v, object el, string[] boardsWords)
+        {
+            throw new NotImplementedException();
+        }
 
         static void Board(int col)
         {
