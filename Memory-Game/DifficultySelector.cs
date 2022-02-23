@@ -7,7 +7,7 @@ namespace Memory_Game
         public static string Choise()
         {
             string choise;
-            bool exit = false;
+            bool exit;
             do
             {
                 Console.WriteLine("Write the difficulty level: easy | hard");
@@ -30,7 +30,7 @@ namespace Memory_Game
             Console.WriteLine($"Chosen level {choise}");
             return choise;
         }
-        public static int boardLength(string level)
+        public static int BoardLength(string level)
         {
             if (level == "easy")
             {
@@ -42,7 +42,7 @@ namespace Memory_Game
 
             }
         }
-        public static int maxLives(string level)
+        public static int MaxLives(string level)
         {
             if (level == "easy")
             {

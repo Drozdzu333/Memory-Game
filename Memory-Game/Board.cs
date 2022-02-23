@@ -1,30 +1,41 @@
-﻿
-
-namespace Memory_Game
+﻿namespace Memory_Game
 {
     class Board 
     {
-        readonly Random random = new Random();
+        readonly Random random = new();
 
         public int length;
         public string[] wordsArr;
         public int[] rowBCoordinates;
+        public int[] found;
 
         public Board(string[] eWords, int eLength)
         {
             length = eLength;
-            wordsArr = wordsShuffler(eLength, eWords);
-            rowBCoordinates = numbersShuffler(eLength);
+            wordsArr = WordsShuffler(eLength, eWords);
+            rowBCoordinates = NumbersShuffler(eLength);
+            found = new int [eLength];
+
+
+            for(int i = 0; i < eLength; i++)
+            {
+                found[i] = -1;
+            }
         }
+        
+
+
+        
+
 
 
         
         // Public Methods
-        public static void PrintBoard(string[] rowA, string[] rowB)
+        public void PrintBoard(int shootA, int shootB)
         {
             //Header coordinates
             Console.Write("  ");
-            for (int i = 1; i <= rowA.Length; i++)
+            for (int i = 1; i <= length; i++)
             {
                 Console.Write("  " + i + " ");
             }
@@ -32,22 +43,69 @@ namespace Memory_Game
 
             //Aside coordinates and play-board
             Console.Write("A ");
-            for (int i = 0; i < rowA.Length; i++)
+            string[] arr = new string[length];
+
+            for (int i = 0; i < arr.Length; i++)
             {
-                Console.Write($"; {rowA[i]} ");
+                if (found[i] >= 0)
+                {
+                    arr[i] = "O";
+                }
+                else if (shootA == i)
+                {
+                    arr[i] = wordsArr[i];
+                }
+                else
+                {
+                    arr[i] = "X";
+                }
             }
-            Console.Write("\n");
-            Console.Write("B ");
-            for (int i = 0; i < rowB.Length; i++)
+            foreach (string s in arr)
             {
-                Console.Write($"; {rowB[i]} ");
+                Console.Write($"; {s} ");
+            }
+
+            Console.Write("\n");
+
+            Console.Write("B ");
+            
+            string[] arr2 = new string[length];
+
+            for(int i = 0; i < arr2.Length; i++)
+            {
+                arr2[i] = "X";
+            }
+            if (shootB >= 0)
+            {
+                int index = rowBCoordinates[shootB];
+                arr2[shootB] = wordsArr[index];
+            }
+
+            for(int i = 0; i<arr2.Length; i++)
+            {
+                int index = rowBCoordinates[i];
+                if ( found[index] >= 0)
+                {
+                    arr2[i] = "O";
+                }
+            }
+            
+            foreach (string s in arr2)
+            {
+                Console.Write($"; {s} ");
             }
             Console.Write("\n");
         }
 
+        
+
+
+
+
+
 
         // Constructor Methods
-        private string[] wordsShuffler(int length, string[] arr)
+        private string[] WordsShuffler(int length, string[] arr)
         {
             string[] result = new string[length];
             for (int i = 0; i < length; i++)
@@ -61,7 +119,7 @@ namespace Memory_Game
             }
             return result;
         }
-        private int[] numbersShuffler(int length)
+        private int[] NumbersShuffler(int length)
         {
             int[] arr = new int[length];
             int[] arrShuffled = new int[length];
