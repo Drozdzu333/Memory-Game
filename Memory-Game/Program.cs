@@ -49,36 +49,60 @@
                 }
 
                 // Filling boards of not duplicated words
-                string[] boardsWords = new string[boardLength];
+                string[] rowA = new string[boardLength];
+                
+                
                 for (int i = 0; i < boardLength; i++)
                 {
                     string word = words[random.Next(words.Length)];
-                    if (Array.IndexOf(boardsWords, word) < 0)
+                    if (Array.IndexOf(rowA, word) < 0)
                     {
-                        boardsWords[i] = word;
+                        rowA[i] = word;
                     }
                     else i--;
                 }
-                foreach(string el in boardsWords){
-                    Console.WriteLine(el);
+
+                //
+                int[] rowB = arrShuffle(boardLength);
+
+                    // shuffle words in row
+                int[] arrShuffle(int length)
+                {
+                    Console.WriteLine("ArrShuffle init: " + length);
+                    int[] arr = new int[length];
+                    int[] arrShuffled = new int[length];
+                    // wypełniacz rosnąco
+                    for (int i = 0; i < length; i++)
+                    {
+                        arr[i] = i;
+                    }
+                    // randomizer
+                    for(int j =  0; j < length; j++)
+                    {
+                        int rndValOfArr = arr[random.Next(arr.Length -1)];
+                        arrShuffled[j] = rndValOfArr;
+                        arr = arr.Where(x => x != rndValOfArr).ToArray();
+                    }
+                    return arrShuffled;
                 }
+                
 
 
 
 
-                Board(5);
-
-                exit = Console.ReadLine() == "exit" ? true: false ;
 
 
+
+                // End of level loop
+            Board(5);
+            exit = Console.ReadLine() == "exit" ? true: false ;
             }
-
+            // end of Main Loop
         }
 
-        private static void forech(int v, object el, string[] boardsWords)
-        {
-            throw new NotImplementedException();
-        }
+
+
+
 
         static void Board(int col)
         {
@@ -89,6 +113,7 @@
                 Console.Write("  " + i + " ");
             }
             Console.Write("\n");
+ 
             //Side coordinates and play-board
             Console.Write("A ");
             for (int i = 0; i < col; i++)
@@ -104,31 +129,3 @@
         }
     }
 }
-//public class Difficulty
-//{
-//    int boardLength, maxChances;
-//    string difficulty = GetDifficulty();
-
-//    string void GetDifficulty()
-//    { 
-//    };
-//             private bool choosed = false;
-//            for(choosed; choosed == true)
-//            {
-//                Console.WriteLine("Choose the difficulty level. easy | hard :");
-//                difficulty = Console.ReadLine().ToLower();
-//                if (difficulty == "easy")
-//                {
-//                    boardLength = 5;
-//                    maxChances = 10;
-//                    choosed = true;
-//                }
-//                else if (difficulty == "hard")
-//                {
-//                    boardLength = 8;
-//                    maxChances = 15;
-//                    choosed = true;
-//                }
-//            }
-//        }
-//}
