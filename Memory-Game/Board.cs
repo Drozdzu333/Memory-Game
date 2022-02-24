@@ -1,7 +1,8 @@
 ﻿namespace Memory_Game
 {
-    class Board 
+    class Board
     {
+
         readonly Random random = new();
 
         public int length;
@@ -14,23 +15,19 @@
             length = eLength;
             wordsArr = WordsShuffler(eLength, eWords);
             rowBCoordinates = NumbersShuffler(eLength);
-            found = new int [eLength];
-
-
-            for(int i = 0; i < eLength; i++)
+            found = new int[eLength];
+            for (int i = 0; i < eLength; i++)
             {
                 found[i] = -1;
             }
         }
-        
-
-
-        
 
 
 
-        
-        // Public Methods
+
+
+
+       // Public Methods
         public void PrintBoard(int shootA, int shootB)
         {
             //Header coordinates
@@ -68,10 +65,10 @@
             Console.Write("\n");
 
             Console.Write("B ");
-            
+
             string[] arr2 = new string[length];
 
-            for(int i = 0; i < arr2.Length; i++)
+            for (int i = 0; i < arr2.Length; i++)
             {
                 arr2[i] = "X";
             }
@@ -81,15 +78,15 @@
                 arr2[shootB] = wordsArr[index];
             }
 
-            for(int i = 0; i<arr2.Length; i++)
+            for (int i = 0; i < arr2.Length; i++)
             {
                 int index = rowBCoordinates[i];
-                if ( found[index] >= 0)
+                if (found[index] >= 0)
                 {
                     arr2[i] = "O";
                 }
             }
-            
+
             foreach (string s in arr2)
             {
                 Console.Write($"; {s} ");
@@ -97,7 +94,14 @@
             Console.Write("\n");
         }
 
-        
+        public void ShootCompare(int a, int b)
+        {
+            if (a == rowBCoordinates[b])
+            {
+                found[a] = 1;
+            }
+        }
+
 
 
 

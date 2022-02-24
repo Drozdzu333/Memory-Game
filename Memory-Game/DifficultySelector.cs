@@ -6,6 +6,7 @@ namespace Memory_Game
     {
         public static string Choise()
         {
+            Console.Clear();
             string choise;
             bool exit;
             do

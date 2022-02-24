@@ -2,22 +2,23 @@
 
 namespace MemoryGame
 {
-    class Program
+    public class Program
     {
         static void Main()
         {
             string[] words = File.ReadAllLines("D:/Motorola/Coding Task Motorola Academy C#/Words.txt");
-            bool exit = false;
-            while (!exit)
+            string input = " ";
+            while (input != "exit")
             {
-                // Variables
+                // Inicial
                 string difficulty;
                 int boardLength;
                 int maxLives;
+
+                // State
                 int shootA = -1;
                 int shootB = -1;
                 string state = "A";
-                
 
 
                 difficulty = DifficultySelector.Choise();
@@ -25,80 +26,45 @@ namespace MemoryGame
                 boardLength = DifficultySelector.BoardLength(difficulty);
 
                 Board playBoard = new(words, boardLength);
-
-
-                
-                for (int i = 0; i < maxLives;)
+                for (int attempt = 0; attempt < maxLives;)
                 {
                     Console.Clear();
-                    Console.WriteLine($"Try: {i + 1} of {maxLives}");
+                    Tools.HeaderBoard(attempt, maxLives);
                     playBoard.PrintBoard(shootA, shootB);
+
 
                     Console.WriteLine("Enter column number of row " + state);
                     if (state == "A")
                     {
-                        do
-                        {
-                            try
-                            {
-                                shootA = Convert.ToInt16(Console.ReadLine()) - 1;
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine(float.NaN);
-                            }
-                        }
-                        while (shootA < 0 || shootA > boardLength - 1);
+                        shootA = Tools.Move(boardLength);
                         state = "B";
-                        Console.Clear();
                     }
                     else
                     {
-                        do
-                        {
-                            try
-                            {
-                                shootB = Convert.ToInt16(Console.ReadLine()) - 1;
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine(float.NaN);
-                            }
-                        }
-                        while (shootB < 0 || shootB > boardLength - 1);
+                       shootB = Tools.Move(boardLength);
+                       state = "A";
 
-                        state = "A";
-                        Console.Clear();
-                        Console.WriteLine($"Try: {i + 1} of {maxLives}");
-                        playBoard.PrintBoard(shootA, shootB);
-                        Console.WriteLine("Press Enter to continue.");
-                        Console.ReadLine();
-                        ShootCompare();
-                        shootA = -1;
-                        shootB = -1;
-                        i++;
+                       Tools.HeaderBoard(attempt, maxLives);
+                       playBoard.PrintBoard(shootA, shootB);
+                       
+                       playBoard.ShootCompare(shootA, shootB);
+
+                       Tools.PressToContinue();
+                       shootA = -1;
+                       shootB = -1;
+                       attempt++;
                     }
-                    if(Array.IndexOf(playBoard.found,-1) == -1)
+                    if (Array.IndexOf(playBoard.found, -1) == -1)
                     {
                         Console.WriteLine("You won!");
                         Console.ReadLine();
-                        i = maxLives +1;
+                        attempt = maxLives + 1;
                     }
                 }
-
-                        // ------------  COMPARE F    --------------
-                void ShootCompare()
-                {
-                    if (shootA == playBoard.rowBCoordinates[shootB])
-                    {
-                        playBoard.found[shootA] = 1;
-                    }
-                }
-
 
 
                 Console.WriteLine("Press Enter to continue or write \"exit\" and press Enter to escape.");
-                exit = Console.ReadLine() == "exit";
+                input = Console.ReadLine();
             }
         }
     }
