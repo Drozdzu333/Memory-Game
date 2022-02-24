@@ -11,6 +11,8 @@ namespace MemoryGame
             while (input != "exit")
             {
                 // Inicial
+                DateTime _start = DateTime.Now;
+
                 string difficulty;
                 int boardLength;
                 int maxLives;
@@ -56,7 +58,12 @@ namespace MemoryGame
                     }
                     if (Array.IndexOf(playBoard.found, -1) == -1)
                     {
-                        Console.WriteLine("You won!");
+                        DateTime _end = DateTime.Now;
+                    long elapsedTicks =_end.Ticks - _start.Ticks;
+                    
+                        Console.WriteLine($"You won in {attempt}!");
+                        TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+                        Console.WriteLine($"And in {elapsedSpan.TotalSeconds}secounds")
                         Console.ReadLine();
                         attempt = maxLives + 1;
                     }

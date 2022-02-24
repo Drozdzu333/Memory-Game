@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Memory-Game/Component1.cs
+/Memory-Game/ScoreBoard.cs
